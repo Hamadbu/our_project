@@ -7,8 +7,10 @@ class AuthService {
   Future<String> signup({required User user}) async {
     try {
       if (user.username.isNotEmpty && user.password.isNotEmpty) {
+        final FormData formData =
+            FormData.fromMap(user.toJson() as Map<String, dynamic>);
         final Response response =
-            await ApiClient.post("/signup", data: user.toJson());
+            await ApiClient.post("/signup", formData: formData);
         print(response.data);
         Token tokenModle = Token.fromJson(response.data);
         return tokenModle.token.toString();
@@ -21,8 +23,10 @@ class AuthService {
 
   Future signin({required User user}) async {
     try {
+      final FormData formData =
+          FormData.fromMap(user.toJson() as Map<String, dynamic>);
       final Response response =
-          await ApiClient.post("/signin", data: user.toJson());
+          await ApiClient.post("/signin", formData: formData);
       Token tokenModel = Token.fromJson(response.data);
       return tokenModel.token;
     } catch (e) {
