@@ -44,7 +44,7 @@ class _SignupState extends State<SignupPage> {
                     password: passwordController.text);
                 context.read<AuthProvider>().signup(user: user).then((token) {
                   if (token.isNotEmpty) {
-                    context.pushNamed("signin");
+                    context.pushNamed('signin');
                     print(token.toString());
                   }
                 });
