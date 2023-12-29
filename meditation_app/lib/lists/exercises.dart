@@ -1,8 +1,8 @@
 class Exercises {
   static List<String> exercises = [
-    "football",
-    "basketball",
-    "vollyball",
-    "running"
+    "Tips",
+    "Yoga videos",
+    "Music",
+    "Meditation"
   ];
 }
