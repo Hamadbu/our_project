@@ -35,7 +35,7 @@ class _SignupState extends State<SignupPage> {
             TextField(
               decoration: const InputDecoration(hintText: 'Password'),
               controller: passwordController,
-              obscureText: true, //to have the password hidden ****
+              obscureText: false, //to have the password hidden ****
             ),
             ElevatedButton(
               onPressed: () {

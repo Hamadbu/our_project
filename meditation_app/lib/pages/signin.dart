@@ -32,11 +32,17 @@ class SigninPage extends StatelessWidget {
             TextField(
               decoration: const InputDecoration(hintText: 'Password'),
               controller: passwordController,
-              obscureText: false, //to have the password hidden ****
+              obscureText: true, //to have the password hidden ****
             ),
             ElevatedButton(
-              onPressed: (){
-                 context
+              onPressed: () {
+                context.pushNamed('signup');
+              },
+              child: const Text("Sign Up"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context
                     .read<AuthProvider>()
                     .signin(
                         user: User(
@@ -48,7 +54,7 @@ class SigninPage extends StatelessWidget {
                   }
                 });
               },
-              child: const Text("Log in"),
+              child: const Text("Sign in"),
             )
           ],
         ),
