@@ -17,7 +17,10 @@ class ProfilePage extends StatelessWidget {
         children: [
           Center(
             child: Image.asset(
-                'meditation_app/lib/models/asset/profile_image.png'),
+              '/Users/abdulaziz/Development/our_project/meditation_app/lib/models/asset/profile_image.png',
+              height: 100,
+              width: 100,
+            ),
           ),
           Text('username'),
         ],

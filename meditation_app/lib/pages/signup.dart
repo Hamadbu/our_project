@@ -21,6 +21,12 @@ class _SignupState extends State<SignupPage> {
       appBar: AppBar(
         title: Text("Meditation"),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            context.pushNamed('signin');
+          },
+        ),
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
