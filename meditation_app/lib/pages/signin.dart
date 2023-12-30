@@ -21,16 +21,42 @@ class SigninPage extends StatelessWidget {
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(200),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text("Sign in"),
-            TextField(
-              decoration: const InputDecoration(hintText: 'Username'),
-              controller: usernameController,
+            const Text(
+              "Sign in",
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 20.0,
+              width: 10.0,
             ),
             TextField(
-              decoration: const InputDecoration(hintText: 'Password'),
+              decoration: InputDecoration(
+                  hintText: 'Username',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+              controller: usernameController,
+            ),
+            const SizedBox(
+              height: 10.0,
+              width: 10.0,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  hintText: 'Password',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
               controller: passwordController,
               obscureText: true, //to have the password hidden ****
             ),
@@ -39,6 +65,10 @@ class SigninPage extends StatelessWidget {
                 context.pushNamed('signup');
               },
               child: const Text("Sign Up"),
+            ),
+            const SizedBox(
+              height: 10.0,
+              width: 10.0,
             ),
             ElevatedButton(
               onPressed: () {

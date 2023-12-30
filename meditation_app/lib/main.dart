@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/pages/home.dart';
+import 'package:meditation_app/pages/profilepage.dart';
 import 'package:meditation_app/pages/signin.dart';
 import 'package:meditation_app/pages/signup.dart';
 //import 'package:image_picker/image_picker.dart';
@@ -45,6 +46,11 @@ class MyApp extends StatelessWidget {
       path: "/home",
       name: 'home',
       builder: (context, state) => HomePage(),
+    ),
+    GoRoute(
+      path: "/profile",
+      name: 'profile',
+      builder: (context, state) => ProfilePage(),
     ),
   ]);
 }

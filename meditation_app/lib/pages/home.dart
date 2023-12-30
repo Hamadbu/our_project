@@ -1,7 +1,9 @@
 //import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 //import 'package:go_router/go_router.dart';
 import 'package:meditation_app/lists/exercises.dart';
+import 'package:meditation_app/providers/auth_provider.dart';
 //import 'package:meditation_app/models/users.dart';
 //import 'package:meditation_app/providers/auth_provider.dart';
 //import 'package:provider/provider.dart';
@@ -15,6 +17,14 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home"),
         backgroundColor: const Color.fromARGB(255, 255, 131, 7),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            onPressed: () {
+              context.pushNamed('profile');
+            },
+          ),
+        ],
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
