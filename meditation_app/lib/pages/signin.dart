@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+//import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/models/users.dart';
@@ -16,7 +16,7 @@ class SigninPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Meditation"),
+        title: const Text("Meditation"),
         automaticallyImplyLeading: false,
       ),
       resizeToAvoidBottomInset: false,

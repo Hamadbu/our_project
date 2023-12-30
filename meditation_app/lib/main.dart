@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meditation_app/pages/home.dart';
 import 'package:meditation_app/pages/signin.dart';
 import 'package:meditation_app/pages/signup.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
