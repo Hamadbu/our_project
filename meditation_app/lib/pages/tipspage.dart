@@ -10,7 +10,7 @@ class TipsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tips"),
-        backgroundColor: const Color.fromARGB(255, 33, 194, 243),
+        backgroundColor: const Color.fromARGB(255, 255, 218, 185),
       ),
       // body: FutureBuilder(
 

@@ -19,6 +19,7 @@ class SigninPage extends StatelessWidget {
         title: const Text("Meditation"),
         automaticallyImplyLeading: false,
       ),
+      backgroundColor: Color.fromARGB(255, 220, 220, 255),
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -41,7 +42,7 @@ class SigninPage extends StatelessWidget {
               decoration: InputDecoration(
                   hintText: 'Username',
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: const Color.fromARGB(77, 155, 39, 176),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0))),
               controller: usernameController,
@@ -54,34 +55,70 @@ class SigninPage extends StatelessWidget {
               decoration: InputDecoration(
                   hintText: 'Password',
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: const Color.fromARGB(77, 155, 39, 176),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0))),
               controller: passwordController,
               obscureText: true, //to have the password hidden ****
             ),
-            ElevatedButton(
-              onPressed: () {
-                context.pushNamed('signup');
-              },
-              child: const Text("Sign Up"),
+            Container(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 255, 255, 255),
+                    Color.fromARGB(119, 155, 39, 176),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  context.pushNamed('signup');
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.transparent,
+                  onPrimary: Colors.transparent,
+                ),
+                child: const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                context
-                    .read<AuthProvider>()
-                    .signin(
-                        user: User(
+            Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 128, 35, 116),
+                      Color.fromARGB(77, 155, 39, 176)
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<AuthProvider>()
+                        .signin(
+                          user: User(
                             username: usernameController.text,
-                            password: passwordController.text))
-                    .then((token) {
-                  if (token.isNotEmpty) {
-                    context.pushNamed('home');
-                  }
-                });
-              },
-              child: const Text("Sign in"),
-            )
+                            password: passwordController.text,
+                          ),
+                        )
+                        .then((token) {
+                      if (token.isNotEmpty) {
+                        context.pushNamed('home');
+                      }
+                    });
+                  },
+                  child: const Text("Sign in"),
+                ))
           ],
         ),
       ),

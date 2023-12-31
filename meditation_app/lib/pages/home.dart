@@ -1,13 +1,7 @@
-//import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meditation_app/Cards/exercise_card.dart';
-//import 'package:go_router/go_router.dart';
 import 'package:meditation_app/lists/exercises.dart';
-import 'package:meditation_app/providers/auth_provider.dart';
-//import 'package:meditation_app/models/users.dart';
-//import 'package:meditation_app/providers/auth_provider.dart';
-//import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -17,7 +11,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
-        backgroundColor: const Color.fromARGB(255, 255, 131, 7),
+        backgroundColor:
+            Color.fromARGB(255, 220, 220, 255), // Lavender-ish tone
         actions: [
           IconButton(
             icon: Icon(Icons.account_circle),
@@ -44,6 +39,23 @@ class HomePage extends StatelessWidget {
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.pushNamed('tips');
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(Icons.lightbulb, size: 30.0, color: Colors.purple),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Icon(Icons.add, size: 20.0, color: Colors.white),
+            ),
+          ],
+        ),
+        backgroundColor: Color.fromARGB(255, 255, 218, 185), // Soft Yellow
       ),
     );
   }
