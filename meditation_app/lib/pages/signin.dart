@@ -21,7 +21,7 @@ class SigninPage extends StatelessWidget {
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.all(200),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,10 +33,10 @@ class SigninPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(
-              height: 20.0,
-              width: 10.0,
-            ),
+            // const SizedBox(
+            //   height: 20.0,
+            //   width: 10.0,
+            // ),
             TextField(
               decoration: InputDecoration(
                   hintText: 'Username',
@@ -46,10 +46,10 @@ class SigninPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0))),
               controller: usernameController,
             ),
-            const SizedBox(
-              height: 10.0,
-              width: 10.0,
-            ),
+            // const SizedBox(
+            //   height: 10.0,
+            //   width: 10.0,
+            // ),
             TextField(
               decoration: InputDecoration(
                   hintText: 'Password',
@@ -65,10 +65,6 @@ class SigninPage extends StatelessWidget {
                 context.pushNamed('signup');
               },
               child: const Text("Sign Up"),
-            ),
-            const SizedBox(
-              height: 10.0,
-              width: 10.0,
             ),
             ElevatedButton(
               onPressed: () {

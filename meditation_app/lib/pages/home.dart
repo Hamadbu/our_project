@@ -1,6 +1,7 @@
 //import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_app/Cards/exercise_card.dart';
 //import 'package:go_router/go_router.dart';
 import 'package:meditation_app/lists/exercises.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
@@ -36,23 +37,10 @@ class HomePage extends StatelessWidget {
         ),
         itemCount: Exercises.exercises.length,
         itemBuilder: (context, index) {
-          return Card(
-            color: const Color.fromARGB(255, 33, 194, 243),
-            child: Center(
-              child: SizedBox(
-                width: 100.0,
-                height: 100.0,
-                child: Center(
-                  child: Text(
-                    Exercises.exercises[index],
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12.0,
-                    ),
-                  ),
-                ),
-              ),
+          return GestureDetector(
+            child: ExerciseCard(
+              exercise: Exercises.exercises[index],
+              // color: const Color.fromARGB(255, 33, 194, 243),
             ),
           );
         },
