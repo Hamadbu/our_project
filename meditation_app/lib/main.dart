@@ -7,6 +7,7 @@ import 'package:meditation_app/pages/signup.dart';
 import 'package:meditation_app/pages/tipspage.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
+import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -15,7 +16,7 @@ void main() {
       create: (context) => AuthProvider(),
     ),
     ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
+      create: (context) => TipsProvider(),
     ),
   ], child: MyApp()));
 }

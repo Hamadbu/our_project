@@ -19,10 +19,10 @@ class SigninPage extends StatelessWidget {
         title: const Text("Meditation"),
         automaticallyImplyLeading: false,
       ),
-      backgroundColor: Color.fromARGB(255, 220, 220, 255),
+      backgroundColor: const Color.fromARGB(255, 220, 220, 255),
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(40),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,6 +61,9 @@ class SigninPage extends StatelessWidget {
               controller: passwordController,
               obscureText: true, //to have the password hidden ****
             ),
+            SizedBox(
+              height: 20,
+            ),
             Container(
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
@@ -78,8 +81,7 @@ class SigninPage extends StatelessWidget {
                   context.pushNamed('signup');
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.transparent,
-                  onPrimary: Colors.transparent,
+                  backgroundColor: const Color.fromARGB(82, 250, 3, 233),
                 ),
                 child: const Text(
                   "Sign Up",

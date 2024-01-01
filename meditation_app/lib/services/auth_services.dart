@@ -9,7 +9,7 @@ class AuthService {
       if (user.username.isNotEmpty && user.password.isNotEmpty) {
         final Response response =
             await ApiClient.post("/signup", data: user.toJson());
-        print(response.data);
+        //print(response.data);
         Token tokenModle = Token.fromJson(response.data);
         return tokenModle.token.toString();
       }

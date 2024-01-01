@@ -1,22 +1,31 @@
 import 'dart:convert';
 
-class TipsModel {
+class Tips {
   int? id;
   String? text;
   String? author;
-  List<int> upvotes = [];
-  List<String> downvotes = [];
-  TipsModel(
+  List<dynamic>? upvotes = [];
+  List<dynamic>? downvotes = [];
+  Tips(
       {this.id,
       this.text,
       this.author,
       required this.upvotes,
       required this.downvotes});
-  TipsModel.fromJson(Map json) {
-    id = json['id'];
-    text = json['text'];
-    author = json['author'];
-    upvotes = json['upvotes'];
-    downvotes = json['downvotes'];
+  Tips.fromJson(Map<String, dynamic> json) {
+    id = json['id'] as int?;
+    text = json['text'] as String?;
+    author = json['author'] as String?;
+    upvotes = json['upvotes'] as List?;
+    downvotes = json['downvotes'] as List?;
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['id'] = id;
+    json['text'] = text;
+    json['author'] = author;
+    json['upvotes'] = upvotes;
+    json['downvotes'] = downvotes;
+    return json;
   }
 }

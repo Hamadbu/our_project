@@ -45,7 +45,7 @@ class AuthProvider extends ChangeNotifier {
     SharedPreferences shared = await SharedPreferences.getInstance();
     shared.setString("token", '');
     token = "";
-    print(token);
+    //print(token);
     saveTokenInStorage(token);
     notifyListeners();
   }

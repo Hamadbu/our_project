@@ -12,10 +12,10 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home"),
         backgroundColor:
-            Color.fromARGB(255, 220, 220, 255), // Lavender-ish tone
+            const Color.fromARGB(255, 220, 220, 255), // Lavender-ish tone
         actions: [
           IconButton(
-            icon: Icon(Icons.account_circle),
+            icon: const Icon(Icons.account_circle),
             onPressed: () {
               context.pushNamed('profile');
             },
