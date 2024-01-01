@@ -31,7 +31,7 @@ class TipsPage extends StatelessWidget {
         child: Icon(Icons.add),
       ),
       body: FutureBuilder(
-        future: context.read<TipsProvider>().gettipsList(),
+        future: context.read<TipsProvider>().getTipsList(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -43,11 +43,27 @@ class TipsPage extends StatelessWidget {
               return ListView.builder(
                 itemCount: value.tipsList.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(value.tipsList[index].text.toString()),
-                      subtitle: Text(
-                        value.tipsList[index].author.toString(),
+                  return Container(
+                    // width: 1,
+                    // height: 80,
+                    child: Card(
+                      child: ListTile(
+                        title: Text(
+                          value.tipsList[index].text.toString(),
+                          style: TextStyle(
+                              fontSize: 13.0), // Set the desired font size
+                        ),
+                        subtitle: Text(
+                          value.tipsList[index].author.toString(),
+                          style: TextStyle(
+                              fontSize: 13.0), // Set the desired font size
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            _showDeleteTipDialog(context, index);
+                          },
+                        ),
                       ),
                     ),
                   );
@@ -84,11 +100,39 @@ class TipsPage extends StatelessWidget {
                 // Add your logic to save the tip
                 String tipText = tipController.text;
                 if (tipText.isNotEmpty) {
-                  context.read<TipsProvider>().createNewtips(tipText);
+                  context.read<TipsProvider>().createNewTips(tipText);
                 }
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text("Submit"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDeleteTipDialog(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Delete Tip"),
+          content: Text("Are you sure you want to delete this tip?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.read<TipsProvider>().deleteTip(index);
+                Navigator.of(context).pop(); // Close the dialog
+                print(index);
+              },
+              child: const Text("Delete"),
             ),
           ],
         );

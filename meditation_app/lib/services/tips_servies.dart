@@ -29,4 +29,16 @@ class TipsServices {
       throw e.toString();
     }
   }
+
+  Future<void> deleteTipsApi(String tipsName, String author) async {
+    try {
+      final Response response = await ApiClient.delete(
+        "/tips",
+        data: {"text": tipsName, "author": author},
+      );
+      return response.data;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
