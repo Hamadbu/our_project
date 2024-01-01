@@ -11,18 +11,26 @@ class TipsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteTip(int index) async {
-    if (index >= 0 && index < tipsList.length) {
-      // await _tipsServices.deleteTipsApi(
-      //     tipsList[index].text.toString(), tipsList[index].author.toString());
-      tipsList.removeAt(index);
-
-      notifyListeners(); // Notify listeners to rebuild the UI
-    }
+  Future<void> deleteTip(dynamic id) async {
+    await _tipsServices.deleteTipsApi(id);
+    await getTipsList();
+    notifyListeners();
   }
 
   Future<void> createNewTips(String tipsName) async {
     await _tipsServices.createTipsApi(tipsName);
     await getTipsList();
+  }
+
+  Future<void> upVoteTip(dynamic id) async {
+    await _tipsServices.upvoteTipsApi(id);
+    await getTipsList();
+    notifyListeners();
+  }
+
+  Future<void> downVoteTip(dynamic id) async {
+    await _tipsServices.downvoteTipsApi(id);
+    await getTipsList();
+    notifyListeners();
   }
 }

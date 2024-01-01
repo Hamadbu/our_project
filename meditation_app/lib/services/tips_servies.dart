@@ -30,11 +30,32 @@ class TipsServices {
     }
   }
 
-  Future<void> deleteTipsApi(String tipsName, String author) async {
+  Future<List<Tips>> deleteTipsApi(int id) async {
     try {
       final Response response = await ApiClient.delete(
-        "/tips",
-        data: {"text": tipsName, "author": author},
+        "/tips/$id",
+      );
+      return response.data;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<List<Tips>> upvoteTipsApi(int id) async {
+    try {
+      final Response response = await ApiClient.put(
+        "/tips/$id/upvote",
+      );
+      return response.data;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<List<Tips>> downvoteTipsApi(int id) async {
+    try {
+      final Response response = await ApiClient.put(
+        "/tips/$id/downvote",
       );
       return response.data;
     } catch (e) {
