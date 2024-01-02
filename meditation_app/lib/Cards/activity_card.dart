@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_app/lists/activities.dart';
 
-class ExerciseCard extends StatelessWidget {
-  ExerciseCard({super.key, required this.exercise});
-  String exercise;
+class ActivitiesCard extends StatelessWidget {
+  ActivitiesCard({super.key, required this.activity});
+  String activity;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (exercise == "Tips") {
+        if (activity == "Tips") {
           context.pushNamed("tips");
+        }
+        if (activity == "Meditation") {
+          context.pushNamed("exercise");
+        }
+        if (activity == "Music") {
+          context.pushNamed('music');
         }
       },
       child: Center(
@@ -24,7 +31,7 @@ class ExerciseCard extends StatelessWidget {
                 height: 100.0,
                 child: Center(
                   child: Text(
-                    exercise,
+                    activity,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

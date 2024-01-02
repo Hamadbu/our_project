@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meditation_app/Cards/exercise_card.dart';
-import 'package:meditation_app/lists/exercises.dart';
+import 'package:meditation_app/Cards/activity_card.dart';
+import 'package:meditation_app/lists/activities.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -30,11 +30,11 @@ class HomePage extends StatelessWidget {
           childAspectRatio: 1.0,
           mainAxisExtent: 100,
         ),
-        itemCount: Exercises.exercises.length,
+        itemCount: Activities.activity.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            child: ExerciseCard(
-              exercise: Exercises.exercises[index],
+            child: ActivitiesCard(
+              activity: Activities.activity[index],
               // color: const Color.fromARGB(255, 33, 194, 243),
             ),
           );

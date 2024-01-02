@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:meditation_app/models/users.dart';
 import 'package:meditation_app/services/auth_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,17 @@ class AuthProvider extends ChangeNotifier {
     /// token to be saved in local storage
     notifyListeners();
     return token;
+  }
+
+  Future<String> getUsernameFromToken() async {
+    SharedPreferences shared = await SharedPreferences.getInstance();
+    token = shared.getString('token') ?? "";
+
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
+    String username = decodedToken['username'];
+
+    return username;
   }
 
   Future<String> signin({required User user}) async {

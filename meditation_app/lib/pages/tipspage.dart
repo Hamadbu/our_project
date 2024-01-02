@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meditation_app/models/tips_model.dart';
 import 'package:meditation_app/providers/auth_provider.dart';
 import 'package:meditation_app/providers/tips_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,109 +13,152 @@ class TipsPage extends StatefulWidget {
 }
 
 class _TipsPageState extends State<TipsPage> {
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Tips"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              context
-                  .read<AuthProvider>()
-                  .logOut()
-                  .whenComplete(() => context.goNamed('signin'));
-            },
-            child: const Text("Logout"),
+    return DefaultTabController(
+      length: 2, // Number of tabs
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Tips"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context
+                    .read<AuthProvider>()
+                    .logOut()
+                    .whenComplete(() => context.goNamed('signin'));
+              },
+              child: const Text("Logout"),
+            ),
+            IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                GoRouter.of(context).pushNamed('authortips');
+              },
+            ),
+          ],
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'All Tips'),
+              Tab(text: 'My Tips'),
+            ],
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddTipDialog(context);
-        },
-        child: Icon(Icons.add),
-      ),
-      body: FutureBuilder(
-        future: context.read<TipsProvider>().getTipsList(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Consumer<TipsProvider>(
-            builder: (context, value, child) {
-              return ListView.builder(
-                itemCount: value.tipsList.length,
-                itemBuilder: (context, index) {
-                  final thumbsUp = value.tipsList[index].upvotes!.length ?? 0;
-                  final thumbsDown =
-                      value.tipsList[index].downvotes!.length ?? 0;
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _showAddTipDialog(context);
+          },
+          child: Icon(Icons.add),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(labelText: 'Search by Author'),
+                onChanged: (value) {
+                  setState(() {});
+                },
+              ),
+            ),
+            Expanded(
+              child: FutureBuilder(
+                future: context.read<TipsProvider>().getTipsList(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return Consumer<TipsProvider>(
+                    builder: (context, value, child) {
+                      final filteredTips = value.tipsList.where((tip) => tip
+                          .author!
+                          .toLowerCase()
+                          .contains(searchController.text.toLowerCase()));
 
-                  dynamic totalThumbs = thumbsUp - thumbsDown;
-                  return Container(
-                    // width: 1,
-                    // height: 80,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  value.tipsList[index].text.toString(),
-                                  style: TextStyle(fontSize: 13.0),
-                                ),
-                                Text(
-                                  value.tipsList[index].author.toString(),
-                                  style: TextStyle(fontSize: 13.0),
-                                ),
-                              ],
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                setState(() {
-                                  context
-                                      .read<TipsProvider>()
-                                      .deleteTip(value.tipsList[index].id!);
-                                });
-                              },
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    context
-                                        .read<TipsProvider>()
-                                        .upVoteTip(value.tipsList[index].id!);
-                                  });
-                                },
-                                icon: Icon(Icons.thumb_up)),
-                            Text(totalThumbs.toString()),
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    context
-                                        .read<TipsProvider>()
-                                        .downVoteTip(value.tipsList[index].id!);
-                                  });
-                                },
-                                icon: Icon(Icons.thumb_down))
-                          ],
-                        ),
-                      ),
-                    ),
+                      return TabBarView(
+                        children: [
+                          _buildTipsList(context, filteredTips),
+                          _buildTipsList(context, filteredTips, showAll: true),
+                        ],
+                      );
+                    },
                   );
                 },
-              );
-            },
-          );
-        },
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildTipsList(
+    BuildContext context,
+    Iterable<Tips> filteredTips, {
+    bool showAll = false,
+  }) {
+    return ListView.builder(
+      itemCount: filteredTips.length,
+      itemBuilder: (context, index) {
+        final tip = filteredTips.elementAt(index);
+        final thumbsUp = tip.upvotes!.length ?? 0;
+        final thumbsDown = tip.downvotes!.length ?? 0;
+
+        dynamic totalThumbs = thumbsUp - thumbsDown;
+        return Container(
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tip.text.toString(),
+                        style: TextStyle(fontSize: 13.0),
+                      ),
+                      Text(
+                        tip.author.toString(),
+                        style: TextStyle(fontSize: 13.0),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      setState(() {
+                        context.read<TipsProvider>().deleteTip(tip.id!);
+                      });
+                    },
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          context.read<TipsProvider>().upVoteTip(tip.id!);
+                        });
+                      },
+                      icon: Icon(Icons.thumb_up)),
+                  Text(totalThumbs.toString()),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          context.read<TipsProvider>().downVoteTip(tip.id!);
+                        });
+                      },
+                      icon: Icon(Icons.thumb_down))
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -139,7 +183,6 @@ class _TipsPageState extends State<TipsPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Add your logic to save the tip
                 String tipText = tipController.text;
                 if (tipText.isNotEmpty) {
                   context.read<TipsProvider>().createNewTips(tipText);
@@ -147,32 +190,6 @@ class _TipsPageState extends State<TipsPage> {
                 Navigator.of(context).pop(); // Close the dialog
               },
               child: const Text("Submit"),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showDeleteTipDialog(BuildContext context, int index) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Delete Tip"),
-          content: const Text("Are you sure you want to delete this tip?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text("Delete"),
             ),
           ],
         );
